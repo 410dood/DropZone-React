@@ -2,7 +2,8 @@ import * as React from "react";
 import { DropZone } from "./DropZone";
 
 interface DropZoneState {
-    displayMessage: string;
+   phaseTitle: string;
+   cardList: CardListItem[];
 }
 
 interface WrapperProps {
@@ -12,28 +13,97 @@ interface WrapperProps {
 }
 
 interface DropZoneProps extends WrapperProps {
-    displayMessage: string;
+    phaseTitle: string;
 }
 
-class HelloWorldContainer extends React.Component<DropZoneProps, DropZoneState> {
+export interface CardListItem {
+    id: string;
+    name: string;
+    category: string;
+    bgColor: string;
+}
+
+class DropZoneContainer extends React.Component<DropZoneProps, DropZoneState> {
+
     constructor(props: DropZoneProps) {
         super(props);
         this.state = {
-           displayMessage: ""
+           phaseTitle: "",
+           cardList: []
         };
     }
 
+    componentWillReceiveProps() {
+        this.setState({
+            phaseTitle: this.props.phaseTitle,
+            cardList: [
+                {
+                    id: "1",
+                    name: "Learn Angular",
+                    category: "wip",
+                    bgColor: "yellow"
+                },
+                {
+                    id: "2",
+                    name: "React",
+                    category: "wip",
+                    bgColor: "pink"
+                },
+                {
+                    id: "3",
+                    name: "Vue",
+                    category: "complete",
+                    bgColor: "skyblue"}
+                ]
+        });
+    }
+
     componentDidMount() {
-        this.setState({ displayMessage: this.props.displayMessage });
+        this.setState({
+            phaseTitle: this.props.phaseTitle,
+            cardList: [
+                {
+                    id: "1",
+                    name: "Learn Angular",
+                    category: "wip",
+                    bgColor: "yellow"
+                },
+                {
+                    id: "2",
+                    name: "React",
+                    category: "wip",
+                    bgColor: "pink"
+                },
+                {
+                    id: "3",
+                    name: "Vue",
+                    category: "complete",
+                    bgColor: "skyblue"}
+                ]
+        });
+    }
+
+    handleOnDragStart = (event: React.DragEvent<HTMLDivElement>) => {
+        const id = (event.target as HTMLDivElement).id;
+        event.dataTransfer.setData("text/plain", id);
+        console.log(id);
+    }
+
+    handleOnDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
+        const target = (event.target as HTMLDivElement);
+        console.log(target);
     }
 
     render() {
         return(
             <DropZone
-                message={this.state.displayMessage}
+                phaseTitle={this.state.phaseTitle}
+                cardList={this.state.cardList}
+                handleOnDragStart={this.handleOnDragStart}
+                handleOnDragEnter={this.handleOnDragEnter}
             />
         );
     }
 }
 
-export { DropZoneProps, HelloWorldContainer as default };
+export { DropZoneProps, DropZoneContainer as default };
