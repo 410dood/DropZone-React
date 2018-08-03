@@ -5,7 +5,7 @@ export interface HelloProps {
     message: string;
 }
 
-export const Hello: React.SFC<HelloProps> = (props) => (
+export const DropZone: React.SFC<HelloProps> = (props) => (
     <div className="main-div">
         <h1>{props.message}</h1>
     </div>

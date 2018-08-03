@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Hello } from "./Hello";
+import { DropZone } from "./DropZone";
 
-interface HelloWorldContainerState {
+interface DropZoneState {
     displayMessage: string;
 }
 
@@ -11,12 +11,12 @@ interface WrapperProps {
     style?: string;
 }
 
-interface HelloWorldContainerProps extends WrapperProps {
+interface DropZoneProps extends WrapperProps {
     displayMessage: string;
 }
 
-class HelloWorldContainer extends React.Component<HelloWorldContainerProps, HelloWorldContainerState> {
-    constructor(props: HelloWorldContainerProps) {
+class HelloWorldContainer extends React.Component<DropZoneProps, DropZoneState> {
+    constructor(props: DropZoneProps) {
         super(props);
         this.state = {
            displayMessage: ""
@@ -29,11 +29,11 @@ class HelloWorldContainer extends React.Component<HelloWorldContainerProps, Hell
 
     render() {
         return(
-            <Hello
+            <DropZone
                 message={this.state.displayMessage}
             />
         );
     }
 }
 
-export { HelloWorldContainerProps, HelloWorldContainer as default };
+export { DropZoneProps, HelloWorldContainer as default };
