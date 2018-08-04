@@ -3,7 +3,7 @@ import { DropZone } from "./DropZone";
 
 interface DropZoneState {
    phaseTitle: string;
-   cardList: CardListItem[];
+   cardList: mendix.lib.MxObject[];
 }
 
 interface WrapperProps {
@@ -12,8 +12,9 @@ interface WrapperProps {
     style?: string;
 }
 
-interface DropZoneProps extends WrapperProps {
+interface DropZoneContainerProps extends WrapperProps {
     phaseTitle: string;
+    dataSourceMf: string;
 }
 
 export interface CardListItem {
@@ -23,9 +24,9 @@ export interface CardListItem {
     bgColor: string;
 }
 
-class DropZoneContainer extends React.Component<DropZoneProps, DropZoneState> {
+class DropZoneContainer extends React.Component<DropZoneContainerProps, DropZoneState> {
 
-    constructor(props: DropZoneProps) {
+    constructor(props: DropZoneContainerProps) {
         super(props);
         this.state = {
            phaseTitle: "",
@@ -34,52 +35,18 @@ class DropZoneContainer extends React.Component<DropZoneProps, DropZoneState> {
     }
 
     componentWillReceiveProps() {
-        this.setState({
-            phaseTitle: this.props.phaseTitle,
-            cardList: [
-                {
-                    id: "1",
-                    name: "Learn Angular",
-                    category: "wip",
-                    bgColor: "yellow"
-                },
-                {
-                    id: "2",
-                    name: "React",
-                    category: "wip",
-                    bgColor: "pink"
-                },
-                {
-                    id: "3",
-                    name: "Vue",
-                    category: "complete",
-                    bgColor: "skyblue"}
-                ]
-        });
+        mx.ui.action(
+            this.props.dataSourceMf,
+            {
+                error: error => window.mx.ui.error(`Error while executing microflow ${this.props.dataSourceMf}: ${error.message}`),
+                callback: (res: mendix.lib.MxObject[]) => this.setState({ cardList: res })
+            }
+        );
     }
 
     componentDidMount() {
         this.setState({
-            phaseTitle: this.props.phaseTitle,
-            cardList: [
-                {
-                    id: "1",
-                    name: "Learn Angular",
-                    category: "wip",
-                    bgColor: "yellow"
-                },
-                {
-                    id: "2",
-                    name: "React",
-                    category: "wip",
-                    bgColor: "pink"
-                },
-                {
-                    id: "3",
-                    name: "Vue",
-                    category: "complete",
-                    bgColor: "skyblue"}
-                ]
+            phaseTitle: this.props.phaseTitle
         });
     }
 
@@ -106,4 +73,4 @@ class DropZoneContainer extends React.Component<DropZoneProps, DropZoneState> {
     }
 }
 
-export { DropZoneProps, DropZoneContainer as default };
+export { DropZoneContainerProps, DropZoneContainer as default };

@@ -1,27 +1,26 @@
 import * as React from "react";
 import { DropZoneCard } from "./DropZoneCard";
-import { CardListItem } from "./DropZoneContainer";
 import "../ui/style.css";
 
 export interface DropZoneProps {
     phaseTitle: string;
-    cardList: CardListItem[];
+    cardList: mendix.lib.MxObject[];
     handleOnDragStart: (event: React.DragEvent) => void;
     handleOnDragEnter: (event: React.DragEvent) => void;
 }
 
 export const DropZone: React.SFC<DropZoneProps> = (props) => {
-    const List = () => props.cardList.forEach(item => (
+    const list = props.cardList.map(mxObject => (
         <DropZoneCard
-            cardTitle={item.name}
-            cardContent={item.category}
+            description={mxObject.get("Description")}
+            booked={mxObject.get("Booked")}
             handleOnDragStart={props.handleOnDragStart}
         />
     ));
     return (
-        <div className="main-div" onDragOver={props.handleOnDragEnter}>
+        <div className="dropzone" onDragOver={props.handleOnDragEnter}>
             <h2>{props.phaseTitle}</h2>
-            {List}
+            {list}
         </div>
     );
 };
