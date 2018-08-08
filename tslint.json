@@ -9,6 +9,7 @@
       true,
       "check-space"
     ],
+    "jsx-no-lambda": false,
     "eofline": true,
     "indent": [
       true,

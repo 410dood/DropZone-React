@@ -6,3 +6,8 @@
     border: 2px solid black;
     border-radius: 10px;
 }
+
+.dropzone {
+    border: 2px solid black;
+    height: 100%;
+}
