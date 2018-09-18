@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <widget id="com.mendix.widget.custom.dropzone.DropZone" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
     <name>DropZone</name>
-    <description>This create columns with dragable cards</description>
+    <description>This creates columns with dragable cards</description>
     <icon />
     <properties>
-        <property key="phaseTitle" type="string" required="false" defaultValue="">
-            <caption>Title</caption>
-            <category>Phase</category>
-            <description>The title of this phase.</description>
-        </property>
-        <property key="entityToSelect" type="entity" allowNonPersistableEntities="true">
-            <caption>Entity to select</caption>
+        <property key="tasksEntity" required="true" type="entity">
+            <caption>The Entity of the tasks</caption>
             <category>Data Source</category>
-            <description>The entity type that is returned as list from the microflow.</description>
+            <description>The entity for the tasks objects</description>
         </property>
-        <property key="dataSourceMf" type="microflow" required="true" defaultValue="">
+        <property key="statusEnumeration" type="attribute" entityProperty="tasksEntity">
+            <caption>Status Enumeration</caption>
+            <category>Data Source</category>
+            <description>The Enumeration that specify the lanes</description>
+            <attributeTypes>
+                <attributeType name="Enum" />
+            </attributeTypes>
+        </property>
+        <property key="dataSourceMicroflow" required="true" type="microflow" >
             <caption>Data Source Microflow</caption>
             <category>Data Source</category>
-            <description>Where are the projects coming from?</description>
-            <returnType type="Object" isList="true" entityProperty="entityToSelect"></returnType>
-        </property>
-        <property key="onDropMf" type="microflow" required="false" defaultValue="" entityProperty="entityToSelect">
-            <caption>On Drop Microflow</caption>
-            <category>Behavior</category>
-            <description>The microflow that is triggered when a project is dropped into a new zone.</description>
-            <returnType type="Object" isList="false" entityProperty="entityToSelect"></returnType>
+            <description>A microflow that returns the list of objects</description>
+            <returnType type="Object" entityProperty="tasksEntity" isList="true"/>
         </property>
     </properties>
 </widget>

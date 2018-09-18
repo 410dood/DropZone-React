@@ -1,6 +1,6 @@
 .draggable-card {
     width: 75%;
-    margin: 10px;
+    margin: 10px auto;
     padding: 10px;
     text-align: center;
     border: 2px solid black;
@@ -8,6 +8,6 @@
 }
 
 .dropzone {
-    border: 2px solid black;
     height: 100%;
+    text-align: center;
 }
