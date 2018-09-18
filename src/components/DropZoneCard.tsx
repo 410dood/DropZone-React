@@ -19,8 +19,11 @@ export const DropZoneCard: React.SFC<DropZoneCardProps> = (props) => (
         onDragStart={props.handleOnDragStart}
         onDragEnd={props.handleOnDragEnd}
     >
-        <h2>{props.name}</h2>
-        <h4>{props.status}</h4>
-        <p>{props.description}</p>
+        <div className="card-header">
+            <h4 className="card-title no-margin override">{props.name}</h4>
+        </div>
+        <div className="card-content">
+            <p>{props.description}</p>
+        </div>
     </div>
 );

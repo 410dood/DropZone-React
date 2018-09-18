@@ -40,7 +40,7 @@ export const DropZone: React.SFC<DropZoneProps> = (props) => {
     return (
         <div
             id={props.value}
-            className="col-md-4"
+            className="col dropzone"
             onDragEnter={props.handleOnDragEnter}
             onDragOver={props.handleOnDragOver}
             onDragLeave={props.handleOnDragLeave}
@@ -48,6 +48,6 @@ export const DropZone: React.SFC<DropZoneProps> = (props) => {
         >
             <h2 className="column-title">{props.caption}</h2>
             {cardList()}
-        </div>
+        </div >
     );
 };

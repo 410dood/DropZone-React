@@ -4,14 +4,13 @@ import { DropZone } from "./DropZone";
 interface DropZoneState {
    cardList: any;
    enumerationOptions: EnumerationMap[] | undefined;
-   draggedItem: HTMLDivElement | undefined;
-   dropZone: HTMLDivElement | undefined;
 }
 
 interface WrapperProps {
     class?: string;
     mxObject?: mendix.lib.MxObject;
     mxform: mxui.lib.form._FormBase;
+    laneList: mendix.lib.MxObject[];
     style?: string;
 }
 
@@ -34,25 +33,25 @@ export interface EnumerationMap extends Object {
 }
 
 class DropZoneContainer extends React.Component<DropZoneContainerProps, DropZoneState> {
-
     private subscriptionHandles: number[];
 
     constructor(props: DropZoneContainerProps) {
             super(props);
             this.state = {
                 cardList: [],
-                enumerationOptions: undefined,
-                draggedItem: undefined,
-                dropZone: undefined
+                enumerationOptions: undefined
             };
+            this.subscriptionHandles = [];
         }
 
     componentDidMount() {
-        console.log("Props" , this.props);
         const tasksEntity = mx.meta.getEntity(this.props.tasksEntity);
         const options = tasksEntity.getEnumMap(this.props.statusEnumeration);
         this.setState({ enumerationOptions: options });
-        console.log(this.state.enumerationOptions);
+        this.updateCards();
+    }
+
+    private updateCards = () => {
         mx.data.action({
             params: {
                 actionname: this.props.dataSourceMicroflow
@@ -61,47 +60,48 @@ class DropZoneContainer extends React.Component<DropZoneContainerProps, DropZone
         });
     }
 
-    private resetSubscriptions(mxObject?: mendix.lib.MxObject) {
-        this.subscriptionHandles.forEach(mx.data.unsubscribe);
+    private resetSubscriptions = (mxObject: mendix.lib.MxObject) => {
+        this.subscriptionHandles.forEach(window.mx.data.unsubscribe);
         this.subscriptionHandles = [];
 
-        if (mxObject) {
-            this.subscriptionHandles.push(mx.data.subscribe({
+        this.subscriptionHandles.push(window.mx.data.subscribe({
                 callback: this.subscriptionCallback,
                 guid: mxObject.getGuid()
             }));
-        }
     }
 
-    private subscriptionCallback() {
-        console.log("this is the subsciption callback");
+    private subscriptionCallback = () => {
+        this.updateCards();
     }
 
     // Event handlers on the element being dragged
     handleOnDrag = (event: React.DragEvent<HTMLDivElement>) => {
-        console.log(event);
-    }
+            console.log(event);
+        }
 
     handleOnDragStart = (event: React.DragEvent<HTMLDivElement>) => {
-        const target = (event.target as HTMLDivElement);
-        event.dataTransfer.setData("text/plain", target.id);
-        target.style.opacity = "0.5";
-    }
+            event.dataTransfer.clearData();
+            const target = (event.target as HTMLDivElement);
+            event.dataTransfer.setData("text/plain", target.id);
+            target.style.opacity = "0.5";
+        }
 
     handleOnDragEnd = (event: React.DragEvent<HTMLDivElement>) => {
-        const target = (event.target as HTMLDivElement);
-        target.style.opacity = "";
-    }
+            const target = (event.target as HTMLDivElement);
+            target.style.opacity = "";
+        }
 
     // Event handlers for drop zones
     handleOnDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
         const target = event.currentTarget as HTMLDivElement;
-        target.style.backgroundColor = "hsla(220, 100%,  44%,  0.5)";
+        target.style.backgroundColor = "hsla(218, 67%, 98%, 1)";
 
     }
 
     handleOnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+        const target = event.currentTarget as HTMLDivElement;
         event.preventDefault();
+        target.style.backgroundColor = "hsla(218, 67%, 98%, 1)";
     }
 
     handleOnDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
@@ -123,6 +123,7 @@ class DropZoneContainer extends React.Component<DropZoneContainerProps, DropZone
     changeStatus = (mxObject: mendix.lib.MxObject, value: string) => {
         mxObject.set(this.props.statusEnumeration, value);
         mx.data.commit({ mxobj: mxObject, callback: () => console.log("object commited") });
+        this.updateCards();
     }
 
     mapEnumerationValues = () => {
@@ -152,7 +153,7 @@ class DropZoneContainer extends React.Component<DropZoneContainerProps, DropZone
 
     render() {
         return (
-            <div className="row">
+            <div className="dropzone-container">
                 {this.mapEnumerationValues()}
             </div>
         );

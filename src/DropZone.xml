@@ -23,5 +23,23 @@
             <description>A microflow that returns the list of objects</description>
             <returnType type="Object" entityProperty="tasksEntity" isList="true"/>
         </property>
+        <property key="laneList" type="object" isList="true">
+            <caption>Lane Config</caption>
+            <category>Config</category>
+            <description>Configure the lanes that map to the enumeration</description>
+            <properties>
+                <!-- Define the sub-properties here -->
+                <property key="laneName" type="string" defaultValue="Lane">
+                    <caption>Lane Name</caption>
+                    <category>Data source</category>
+                    <description>Enter a name for the lane</description>
+                </property>
+                <property key="enumerationValue" type="string">
+                    <caption>Enum Value</caption>
+                    <category>Data source</category>
+                    <description>Enter the value the lane should map to</description>
+                </property>
+            </properties>
+        </property>
     </properties>
 </widget>
