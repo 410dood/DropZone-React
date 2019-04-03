@@ -6,6 +6,7 @@ interface DropZoneCardProps {
     name: string | number | boolean;
     status: string | number | boolean;
     description: string | number | boolean;
+    subheader: string | number | boolean;
     handleOnDrag: (event: React.DragEvent) => void;
     handleOnDragStart: (event: React.DragEvent) => void;
     handleOnDragEnd: (event: React.DragEvent) => void;
@@ -23,6 +24,7 @@ export const DropZoneCard: React.SFC<DropZoneCardProps> = (props) => (
             <h4 className="card-title no-margin override">{props.name}</h4>
         </div>
         <div className="card-content">
+            <b>{props.subheader}</b>
             <p>{props.description}</p>
         </div>
     </div>

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "webpack && cp /c/Users/whati/Desktop/MendixWidgets/DropZone-React/dist/1.0.0/DropZone.mpk /c/Users/whati/Documents/Mendix/WidgetTest-main/widgets",
+    "build": "webpack && cp /c/Users/Bill/dev/DropZone-React/dist/1.0.0/DropZone.mpk /c/Users/Bill/Documents/Mendix/MxTestProject-main/widgets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

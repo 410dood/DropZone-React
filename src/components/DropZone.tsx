@@ -29,6 +29,7 @@ export const DropZone: React.SFC<DropZoneProps> = (props) => {
                     name={card.get("Name")}
                     status={card.get("Status")}
                     description={card.get("Description")}
+                    subheader={card.get("SubHeader")}
                     handleOnDrag={props.handleOnDrag}
                     handleOnDragStart={props.handleOnDragStart}
                     handleOnDragEnd={props.handleOnDragEnd}

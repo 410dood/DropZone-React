@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="com.mendix.widget.custom.dropzone.DropZone" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>DropZone</name>
+    <description>This creates columns with dragable cards</description>
+    <icon />
+    <properties>
+        <property key="tasksEntity" required="true" type="entity">
+            <caption>The Entity of the tasks</caption>
+            <category>Data Source</category>
+            <description>The entity for the tasks objects</description>
+        </property>
+        <property key="statusEnumeration" type="attribute" entityProperty="tasksEntity">
+            <caption>Status Enumeration</caption>
+            <category>Data Source</category>
+            <description>The Enumeration that specify the lanes</description>
+            <attributeTypes>
+                <attributeType name="Enum" />
+            </attributeTypes>
+        </property>
+        <property key="dataSourceMicroflow" required="true" type="microflow" >
+            <caption>Data Source Microflow</caption>
+            <category>Data Source</category>
+            <description>A microflow that returns the list of objects</description>
+            <returnType type="Object" entityProperty="tasksEntity" isList="true"/>
+        </property>
+        <property key="laneList" type="object" isList="true">
+            <caption>Lane Config</caption>
+            <category>Config</category>
+            <description>Configure the lanes that map to the enumeration</description>
+            <properties>
+                <!-- Define the sub-properties here -->
+                <property key="laneName" type="string" defaultValue="Lane">
+                    <caption>Lane Name</caption>
+                    <category>Data source</category>
+                    <description>Enter a name for the lane</description>
+                </property>
+                <property key="enumerationValue" type="string">
+                    <caption>Enum Value</caption>
+                    <category>Data source</category>
+                    <description>Enter the value the lane should map to</description>
+                </property>
+            </properties>
+        </property>
+    </properties>
+</widget>
