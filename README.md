@@ -1,3 +1,7 @@
+# This is actually dropzone in react 
+
+
+
 # timeseries-react-boilerplate
 
 This boilerplate will allow development of mendix widgets using typescript and react with JSX. 
